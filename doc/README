@@ -1,0 +1,16 @@
+recommendation
+
+Name
+ Collaborative filtering for Recommendation
+
+Syntax
+ require 'recommendation'
+
+Description
+ http://en.wikipedia.org/wiki/Recommender_system
+
+Installation
+ $ gem install recommendation
+
+Tutorial
+ See spec files.

@@ -36,8 +36,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "recommendation"
   gem.homepage = "http://github.com/id774/recommendation"
   gem.license = "GPL"
-  gem.summary = %Q{naivebayes}
-  gem.description = %Q{Naive Bayes classifier}
+  gem.summary = %Q{recommendation}
+  gem.description = %Q{Collaborative filtering for recommender system}
   gem.email = "idnanashi@gmail.com"
   gem.authors = ["id774"]
   # dependencies defined in Gemfile

@@ -145,6 +145,7 @@ describe 'Recommendation::Supervisor' do
       result[1][1].should be_eql expected[1][1]
       result[2][0].should be_eql expected[2][0]
       result[2][1].should be_eql expected[2][1]
+
     end
   end
 end

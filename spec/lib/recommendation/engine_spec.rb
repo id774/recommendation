@@ -4,7 +4,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe 'Recommendation::Engine' do
-  describe 'get_recommendation' do
+  describe 'recommendation' do
     it 'should be suggesting interesting products' do
       expected = [[3.3477895267131017, "The Night Listener"], [2.8325499182641614, "Lady in the Water"], [2.530980703765565, "Just My Luck"]]
 
@@ -13,7 +13,7 @@ describe 'Recommendation::Engine' do
       engine = Recommendation::Engine.new
 
       new_comer.keys[0].should be_eql 'Toby'
-      engine.get_recommendations(supervisor.table, new_comer.keys[0]).should be_eql expected
+      engine.recommendations(supervisor.table, new_comer.keys[0]).should be_eql expected
     end
   end
 

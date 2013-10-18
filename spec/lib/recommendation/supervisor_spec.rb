@@ -127,7 +127,7 @@ describe 'Recommendation::Supervisor' do
       engine = Recommendation::Engine.new
 
       expected = [[220.0, "item_6"]]
-      result = engine.get_recommendations(supervisor.table, 'user_4')
+      result = engine.recommendations(supervisor.table, 'user_4')
 
       result.length.should be_eql 1
       result[0].length.should be_eql 2

@@ -10,7 +10,7 @@ def demo
   supervisor.train(new_comer)
   engine = Recommendation::Engine.new
 
-  p engine.get_recommendations(supervisor.table, 'Toby') #=> [[3.3477895267131017, "The Night Listener"], [2.8325499182641614, "Lady in the Water"], [2.530980703765565, "Just My Luck"]]
+  p engine.recommendations(supervisor.table, 'Toby') #=> [[3.3477895267131017, "The Night Listener"], [2.8325499182641614, "Lady in the Water"], [2.530980703765565, "Just My Luck"]]
 
   p engine.top_matches(supervisor.table, 'Toby') #=> [[0.9912407071619299, "Lisa Rose"], [0.9244734516419049, "Mick LaSalle"], [0.8934051474415647, "Claudia Puig"], [0.66284898035987, "Jack Matthews"], [0.38124642583151164, "Gene Seymour"]]
 

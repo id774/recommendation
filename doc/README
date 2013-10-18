@@ -1,7 +1,7 @@
 recommendation
 
 Name
- Collaborative filtering for Recommendation
+ Collaborative filtering for recommender system
 
 Syntax
  require 'recommendation'

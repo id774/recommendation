@@ -3,7 +3,7 @@
 
 module Recommendation
   class Engine
-    def recommendations(table, id, similarity=:sim_pearson)
+    def recommendation(table, id, similarity=:sim_pearson)
       totals_h = Hash.new(0)
       sim_sums_h = Hash.new(0)
       table.each do |other, val|
@@ -77,7 +77,7 @@ module Recommendation
     end
 
     def shared_items_a(table, id1, id2)
-      table[id1].keys & table[id2].keys
+      table[id1].nil? ? [] : table[id1].keys & table[id2].keys
     end
   end
 end

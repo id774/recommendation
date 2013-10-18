@@ -13,7 +13,7 @@ describe 'Recommendation::Engine' do
       engine = Recommendation::Engine.new
 
       new_comer.keys[0].should be_eql 'Toby'
-      engine.recommendations(supervisor.table, new_comer.keys[0]).should be_eql expected
+      engine.recommendation(supervisor.table, new_comer.keys[0]).should be_eql expected
     end
   end
 

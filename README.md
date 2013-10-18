@@ -29,6 +29,8 @@ In reference
 Tutorial
 --------
 
+See demo.rb and spec files.
+
 
 ChangeLog
 ---------

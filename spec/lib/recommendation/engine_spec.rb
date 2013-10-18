@@ -55,6 +55,30 @@ describe 'Recommendation::Engine' do
       engine.top_matches(movies, new_comer.values[0].keys[2]).should be_eql expected
     end
   end
+
+  describe 'recommendation for the unexisting user' do
+    it 'should return empty array' do
+      expected = []
+
+      supervisor = Recommendation::Supervisor.new(visitors)
+      supervisor.train(new_comer)
+      engine = Recommendation::Engine.new
+
+      engine.recommendation(supervisor.table, 'hoge').should be_eql expected
+    end
+  end
+
+  describe 'top_matches for the unexisting item' do
+    it 'should return all zero score' do
+      expected = [[0, "Toby"], [0, "Mick LaSalle"], [0, "Michael Phillips"], [0, "Lisa Rose"], [0, "Jack Matthews"]]
+
+      supervisor = Recommendation::Supervisor.new(visitors)
+      supervisor.train(new_comer)
+      engine = Recommendation::Engine.new
+
+      engine.top_matches(supervisor.table, 'fuga').should be_eql expected
+    end
+  end
 end
 
 def new_comer

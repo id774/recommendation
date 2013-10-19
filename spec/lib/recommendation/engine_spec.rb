@@ -6,7 +6,11 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe 'Recommendation::Engine' do
   describe 'recommendation' do
     it 'should be suggesting interesting products' do
-      expected = [["The Night Listener", 3.3477895267131017], ["Lady in the Water", 2.8325499182641614], ["Just My Luck", 2.530980703765565]]
+      expected = [
+        ["The Night Listener", 3.3477895267131017],
+        ["Lady in the Water", 2.8325499182641614],
+        ["Just My Luck", 2.530980703765565]
+      ]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
@@ -27,7 +31,13 @@ describe 'Recommendation::Engine' do
 
   describe 'top_matches' do
     it 'should be finding similar users' do
-      expected = [["Lisa Rose", 0.9912407071619299], ["Mick LaSalle", 0.9244734516419049], ["Claudia Puig", 0.8934051474415647], ["Jack Matthews", 0.66284898035987], ["Gene Seymour", 0.38124642583151164]]
+      expected = [
+        ["Lisa Rose", 0.9912407071619299],
+        ["Mick LaSalle", 0.9244734516419049],
+        ["Claudia Puig", 0.8934051474415647],
+        ["Jack Matthews", 0.66284898035987],
+        ["Gene Seymour", 0.38124642583151164]
+      ]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
@@ -63,7 +73,13 @@ describe 'Recommendation::Engine' do
 
   describe 'reversed critics' do
     it 'should be found similar items' do
-      expected = [["You, Me and Dupree", 0.6579516949597695], ["Lady in the Water", 0.4879500364742689], ["Snake on the Plane", 0.11180339887498941], ["The Night Listener", -0.1798471947990544], ["Just My Luck", -0.42289003161103106]]
+      expected = [
+        ["You, Me and Dupree", 0.6579516949597695],
+        ["Lady in the Water", 0.4879500364742689],
+        ["Snake on the Plane", 0.11180339887498941],
+        ["The Night Listener", -0.1798471947990544],
+        ["Just My Luck", -0.42289003161103106]
+      ]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
@@ -103,7 +119,13 @@ describe 'Recommendation::Engine' do
 
   describe 'top_matches for the unexisting item' do
     it 'should return all zero score' do
-      expected = [["Toby", 0], ["Mick LaSalle", 0], ["Michael Phillips", 0], ["Lisa Rose", 0], ["Jack Matthews", 0]]
+      expected = [
+        ["Toby", 0],
+        ["Mick LaSalle", 0],
+        ["Michael Phillips", 0],
+        ["Lisa Rose", 0],
+        ["Jack Matthews", 0]
+      ]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)

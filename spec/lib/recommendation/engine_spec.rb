@@ -6,28 +6,47 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe 'Recommendation::Engine' do
   describe 'recommendation' do
     it 'should be suggesting interesting products' do
-      expected = {"The Night Listener"=>3.3477895267131017, "Lady in the Water"=>2.8325499182641614, "Just My Luck"=>2.530980703765565}
-
+      expected = [["The Night Listener", 3.3477895267131017], ["Lady in the Water", 2.8325499182641614], ["Just My Luck", 2.530980703765565]]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
       engine = Recommendation::Engine.new
 
       new_comer.keys[0].should be_eql 'Toby'
-      engine.recommendation(supervisor.table, new_comer.keys[0]).should be_eql expected
+      result = engine.recommendation(supervisor.table, new_comer.keys[0])
+
+      result.length.should be_eql 3
+      result[0][0].should be_eql expected[0][0]
+      result[0][1].should be_eql expected[0][1]
+      result[1][0].should be_eql expected[1][0]
+      result[1][1].should be_eql expected[1][1]
+      result[2][0].should be_eql expected[2][0]
+      result[2][1].should be_eql expected[2][1]
     end
   end
 
   describe 'top_matches' do
     it 'should be finding similar users' do
-      expected ={"Lisa Rose"=>0.9912407071619299, "Mick LaSalle"=>0.9244734516419049, "Claudia Puig"=>0.8934051474415647, "Jack Matthews"=>0.66284898035987, "Gene Seymour"=>0.38124642583151164}
+      expected = [["Lisa Rose", 0.9912407071619299], ["Mick LaSalle", 0.9244734516419049], ["Claudia Puig", 0.8934051474415647], ["Jack Matthews", 0.66284898035987], ["Gene Seymour", 0.38124642583151164]]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
       engine = Recommendation::Engine.new
 
       new_comer.keys[0].should be_eql 'Toby'
-      engine.top_matches(supervisor.table, new_comer.keys[0]).should be_eql expected
+      result = engine.top_matches(supervisor.table, new_comer.keys[0])
+
+      result.length.should be_eql 5
+      result[0][0].should be_eql expected[0][0]
+      result[0][1].should be_eql expected[0][1]
+      result[1][0].should be_eql expected[1][0]
+      result[1][1].should be_eql expected[1][1]
+      result[2][0].should be_eql expected[2][0]
+      result[2][1].should be_eql expected[2][1]
+      result[3][0].should be_eql expected[3][0]
+      result[3][1].should be_eql expected[3][1]
+      result[4][0].should be_eql expected[4][0]
+      result[4][1].should be_eql expected[4][1]
     end
   end
 
@@ -44,7 +63,7 @@ describe 'Recommendation::Engine' do
 
   describe 'reversed critics' do
     it 'should be found similar items' do
-      expected = {"You, Me and Dupree"=>0.6579516949597695, "Lady in the Water"=>0.4879500364742689, "Snake on the Plane"=>0.11180339887498941, "The Night Listener"=>-0.1798471947990544, "Just My Luck"=>-0.42289003161103106}
+      expected = [["You, Me and Dupree", 0.6579516949597695], ["Lady in the Water", 0.4879500364742689], ["Snake on the Plane", 0.11180339887498941], ["The Night Listener", -0.1798471947990544], ["Just My Luck", -0.42289003161103106]]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
@@ -53,31 +72,56 @@ describe 'Recommendation::Engine' do
       movies = supervisor.transform_table
 
       new_comer.values[0].keys[2].should be_eql 'Superman Returns'
-      engine.top_matches(movies, new_comer.values[0].keys[2]).should be_eql expected
+      result = engine.top_matches(movies, new_comer.values[0].keys[2])
+
+      result.length.should be_eql 5
+      result[0][0].should be_eql expected[0][0]
+      result[0][1].should be_eql expected[0][1]
+      result[1][0].should be_eql expected[1][0]
+      result[1][1].should be_eql expected[1][1]
+      result[2][0].should be_eql expected[2][0]
+      result[2][1].should be_eql expected[2][1]
+      result[3][0].should be_eql expected[3][0]
+      result[3][1].should be_eql expected[3][1]
+      result[4][0].should be_eql expected[4][0]
+      result[4][1].should be_eql expected[4][1]
     end
   end
 
   describe 'recommendation for the unexisting user' do
     it 'should return empty array' do
-      expected = {}
+      expected = []
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
       engine = Recommendation::Engine.new
 
-      engine.recommendation(supervisor.table, 'hoge').should be_eql expected
+      result = engine.recommendation(supervisor.table, 'hoge')
+      result.length.should be_eql 0
     end
   end
 
   describe 'top_matches for the unexisting item' do
     it 'should return all zero score' do
-      expected = {"Toby"=>0, "Mick LaSalle"=>0, "Michael Phillips"=>0, "Lisa Rose"=>0, "Jack Matthews"=>0}
+      expected = [["Toby", 0], ["Mick LaSalle", 0], ["Michael Phillips", 0], ["Lisa Rose", 0], ["Jack Matthews", 0]]
 
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
       engine = Recommendation::Engine.new
 
-      engine.top_matches(supervisor.table, 'fuga').should be_eql expected
+      result = engine.top_matches(supervisor.table, 'fuga')
+
+      result.length.should be_eql 5
+      result[0][0].should be_eql expected[0][0]
+      result[0][1].should be_eql expected[0][1]
+      result[1][0].should be_eql expected[1][0]
+      result[1][1].should be_eql expected[1][1]
+      result[2][0].should be_eql expected[2][0]
+      result[2][1].should be_eql expected[2][1]
+      result[3][0].should be_eql expected[3][0]
+      result[3][1].should be_eql expected[3][1]
+      result[4][0].should be_eql expected[4][0]
+      result[4][1].should be_eql expected[4][1]
     end
   end
 end

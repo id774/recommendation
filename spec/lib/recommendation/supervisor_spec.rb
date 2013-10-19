@@ -31,13 +31,23 @@ describe 'Recommendation::Supervisor' do
       supervisor = Recommendation::Supervisor.new(merged_data)
       engine = Recommendation::Engine.new
 
-      expected = {"item_6" => 220.0}
+      expected = [["item_6", 220.0]]
       result = engine.recommendation(supervisor.table, 'user_4')
-      result.should be_eql expected
 
-      expected = {"user_2"=>1.0, "user_1"=>1.0, "user_3"=>0}
+      result.length.should be_eql 1
+      result[0][0].should be_eql expected[0][0]
+      result[0][1].should be_eql expected[0][1]
+
+      expected = [["user_2", 1.0], ["user_1", 1.0], ["user_3", 0]]
       result = engine.top_matches(supervisor.table, 'user_4')
-      result.should be_eql expected
+
+      result.length.should be_eql 3
+      result[0][0].should be_eql expected[0][0]
+      result[0][1].should be_eql expected[0][1]
+      result[1][0].should be_eql expected[1][0]
+      result[1][1].should be_eql expected[1][1]
+      result[2][0].should be_eql expected[2][0]
+      result[2][1].should be_eql expected[2][1]
     end
   end
 end

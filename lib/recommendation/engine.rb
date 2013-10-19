@@ -23,7 +23,7 @@ module Recommendation
         rankings[item] = total/sim_sums_h[item]
       end
 
-      Hash[rankings.sort_by{|k, v| -v}]
+      rankings.sort_by{|k, v| -v}
     end
 
     def top_matches(table, user, n=5, similarity=:sim_pearson)
@@ -33,9 +33,10 @@ module Recommendation
           scores << [__send__(similarity, table, user,key), key]
         end
       end
-      result = Hash.new
+
+      result = Array.new
       scores.sort.reverse[0,n].each do |k, v|
-        result[v] = k
+        result << [v, k]
       end
       result
     end

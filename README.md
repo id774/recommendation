@@ -3,6 +3,8 @@ Recommendation
 
 **Collaborative filtering for recommender system**
 
+The gem is intended to implement collaborative filtering alone. (not use KVS.)
+
 
 What is Recommendation
 ----------------------

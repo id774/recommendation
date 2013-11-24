@@ -27,11 +27,12 @@ describe 'Recommendation::Engine' do
   end
 
   context '#top_matches' do
+
     subject {
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
       engine = Recommendation::Engine.new
-      result = engine.top_matches(supervisor.table, new_comer.keys[0])
+      engine.top_matches(supervisor.table, new_comer.keys[0])
     }
 
     let(:expected) {
@@ -46,19 +47,6 @@ describe 'Recommendation::Engine' do
 
     it 'should be finding similar users' do
       expect(subject).to eq expected
-    end
-  end
-
-  context '#transform_table ' do
-    subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      supervisor.transform_table
-    }
-
-    it 'should return reversed critics' do
-      expect(subject).to eq reversed_critics
     end
   end
 
@@ -87,7 +75,8 @@ describe 'Recommendation::Engine' do
     end
   end
 
-  describe 'recommendation for the unexisting user' do
+  context 'recommendation for the unexisting user' do
+
     subject {
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
@@ -102,7 +91,7 @@ describe 'Recommendation::Engine' do
     end
   end
 
-  describe 'top_matches for the unexisting item' do
+  context 'top_matches for the unexisting item' do
     subject {
       supervisor = Recommendation::Supervisor.new(visitors)
       supervisor.train(new_comer)
@@ -120,8 +109,23 @@ describe 'Recommendation::Engine' do
       ]
     }
 
-    it 'should return all zero score' do
+    it 'should return all zero' do
       expect(subject).to eq expected
+    end
+  end
+end
+
+describe 'Recommendation::Supervisor' do
+  context '#transform_table ' do
+    subject {
+      supervisor = Recommendation::Supervisor.new(visitors)
+      supervisor.train(new_comer)
+      engine = Recommendation::Engine.new
+      supervisor.transform_table
+    }
+
+    it 'should return reversed critics' do
+      expect(subject).to eq reversed_critics
     end
   end
 end

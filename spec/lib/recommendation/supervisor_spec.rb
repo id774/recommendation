@@ -4,50 +4,71 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe 'Recommendation::Supervisor' do
-  describe 'initialize and table' do
-    it 'should have empty hash' do
+  context '#initialize and #table' do
+    subject {
       supervisor = Recommendation::Supervisor.new
-      supervisor.table.length.should be_eql 0
+      supervisor.table
+    }
+
+    let(:expected) { {} }
+
+    it 'should have empty hash' do
+      expect(subject).to eq expected
     end
   end
 
-  describe 'initialize and table with args' do
-    it 'should have hash of args' do
+  context '#initialize with args and #table' do
+    subject {
       supervisor = Recommendation::Supervisor.new(initial_data)
-      supervisor.table.should be_eql initial_data
+      supervisor.table
+    }
+
+    let(:expected) { initial_data }
+
+    it 'should have hash of args' do
+      expect(subject).to eq expected
     end
   end
 
-  describe 'train' do
-    it 'should merge additional data' do
+  context '#initialize with args and #train with append data' do
+    subject {
       supervisor = Recommendation::Supervisor.new(initial_data)
       supervisor.train(append_data)
-      supervisor.table.should be_eql merged_data
+      supervisor.table
+    }
+
+    let(:expected) { merged_data }
+
+    it 'should have merged data' do
+      expect(subject).to eq expected
     end
   end
 
-  describe 'integration with engine' do
-    it 'should be suggesting successful' do
+  context '#initialize with merged data and #recommendation' do
+    subject {
       supervisor = Recommendation::Supervisor.new(merged_data)
       engine = Recommendation::Engine.new
+      engine.recommendation(supervisor.table, 'user_4')
+    }
 
-      expected = [["item_6", 220.0]]
-      result = engine.recommendation(supervisor.table, 'user_4')
+    let(:expected) { [["item_6", 220.0]] }
 
-      result.length.should be_eql 1
-      result[0][0].should be_eql expected[0][0]
-      result[0][1].should be_eql expected[0][1]
+    it 'should be suggested successful' do
+      expect(subject).to eq expected
+    end
+  end
 
-      expected = [["user_2", 1.0], ["user_1", 1.0], ["user_3", 0]]
-      result = engine.top_matches(supervisor.table, 'user_4')
+  context '#initialize with merged data and #top_matches' do
+    subject {
+      supervisor = Recommendation::Supervisor.new(merged_data)
+      engine = Recommendation::Engine.new
+      engine.top_matches(supervisor.table, 'user_4')
+    }
 
-      result.length.should be_eql 3
-      result[0][0].should be_eql expected[0][0]
-      result[0][1].should be_eql expected[0][1]
-      result[1][0].should be_eql expected[1][0]
-      result[1][1].should be_eql expected[1][1]
-      result[2][0].should be_eql expected[2][0]
-      result[2][1].should be_eql expected[2][1]
+    let(:expected) { [["user_2", 1.0], ["user_1", 1.0], ["user_3", 0]] }
+
+    it 'should be suggested successful' do
+      expect(subject).to eq expected
     end
   end
 end

@@ -3,14 +3,13 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe 'Recommendation::Engine' do
+describe 'Recommendation::Recommender' do
   context '#recommendation' do
 
     subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      engine.recommendation(supervisor.table, new_comer.keys[0])
+      recommender = Recommendation::Recommender.new(visitors)
+      recommender.train(new_comer)
+      Recommendation::Recommender.recommendation(recommender.table, new_comer.keys[0])
     }
 
     let(:expected) {
@@ -29,10 +28,9 @@ describe 'Recommendation::Engine' do
   context '#top_matches' do
 
     subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      engine.top_matches(supervisor.table, new_comer.keys[0])
+      recommender = Recommendation::Recommender.new(visitors)
+      recommender.train(new_comer)
+      Recommendation::Recommender.top_matches(recommender.table, new_comer.keys[0])
     }
 
     let(:expected) {
@@ -53,11 +51,10 @@ describe 'Recommendation::Engine' do
   context 'reversed critics' do
 
     subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      movies = supervisor.transform_table
-      engine.top_matches(movies, new_comer.values[0].keys[2])
+      recommender = Recommendation::Recommender.new(visitors)
+      recommender.train(new_comer)
+      movies = recommender.transform_table
+      Recommendation::Recommender.top_matches(movies, new_comer.values[0].keys[2])
     }
 
     let(:expected) {
@@ -78,10 +75,9 @@ describe 'Recommendation::Engine' do
   context 'recommendation for the unexisting user' do
 
     subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      engine.recommendation(supervisor.table, 'hoge')
+      recommender = Recommendation::Recommender.new(visitors)
+      recommender.train(new_comer)
+      Recommendation::Recommender.recommendation(recommender.table, 'hoge')
     }
 
     let(:expected) { [] }
@@ -93,10 +89,9 @@ describe 'Recommendation::Engine' do
 
   context 'top_matches for the unexisting item' do
     subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      engine.top_matches(supervisor.table, 'fuga')
+      recommender = Recommendation::Recommender.new(visitors)
+      recommender.train(new_comer)
+      Recommendation::Recommender.top_matches(recommender.table, 'fuga')
     }
 
     let(:expected) {
@@ -113,15 +108,12 @@ describe 'Recommendation::Engine' do
       expect(subject).to eq expected
     end
   end
-end
 
-describe 'Recommendation::Supervisor' do
   context '#transform_table ' do
     subject {
-      supervisor = Recommendation::Supervisor.new(visitors)
-      supervisor.train(new_comer)
-      engine = Recommendation::Engine.new
-      supervisor.transform_table
+      recommender = Recommendation::Recommender.new(visitors)
+      recommender.train(new_comer)
+      recommender.transform_table
     }
 
     it 'should return reversed critics' do

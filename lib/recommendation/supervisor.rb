@@ -3,12 +3,10 @@
 
 module Recommendation
   class Supervisor
+    attr_accessor :table
+
     def initialize(params = {})
       @table = params
-    end
-
-    def table
-      @table
     end
 
     def train(params = {})

@@ -6,6 +6,6 @@ describe Recommendation do
   context "VERSION" do
     subject { Recommendation::VERSION }
 
-    it { expect(subject).to eq "0.2.0" }
+    it { expect(subject).to eq "0.3.0" }
   end
 end

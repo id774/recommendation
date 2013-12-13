@@ -1,3 +1,10 @@
+=== 0.3.0 / 2013-12-13
+
+* Improvement spec (for RSpec 2.14.x).
+
+* Re-construction filenames.
+
+
 === 0.2.0 / 2013-10-19
 
 * Change output format to Array.
